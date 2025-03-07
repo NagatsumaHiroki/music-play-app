@@ -1,4 +1,4 @@
-# React Project
+# Music Play Project
 
 ## 概要
 このプロジェクトは React を使用した Web アプリケーションです。
