@@ -15,7 +15,6 @@ function Top() {
   const [keyword, setKeyword] = useState('');
   const [searchedSongs, setSearchedSongs] = useState<SearchSongList>();
   const isSearchedResult = searchedSongs != null;
-  console.log(isSearchedResult);
 
   useEffect(() => {
     featchPopularSongs()
@@ -23,7 +22,7 @@ function Top() {
   const featchPopularSongs = async () =>{
      setIsLoading(true);
      const result = await getPopularSongs()
-     const popularSongs  = result.items.map((item)=> {
+     const popularSongs  = result.items.map((item : popularSongsList[])=> {
       return item;
      });
      setPoplarSong(popularSongs);
