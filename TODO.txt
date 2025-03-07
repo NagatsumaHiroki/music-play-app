@@ -1,0 +1,34 @@
+残りの対応：
+１：TOPへ戻るボタンのTailwind化 済
+２：APIエラー：エラーハンドリング　ダイアログ表示
+３: 良きしないURL：  404ページに遷移 済
+４：Readme記述
+5：ESLintの設定
+6：空白、nullか判定して、判定されたら、検索窓の下に「検索したい文字を入力してください」と表示
+
+
+const checkKaraMoji = (checkStr) =>{
+    if(!checkStr){
+        console.log('空文字またはnullです');
+    }else{
+        console.log('1文字以上の文字列です');
+    }
+}
+const kara = "";
+let nullObject =null;
+checkKaraMoji(kara);       //console => 空文字またはnullです
+checkKaraMoji(kara);  
+
+機能追加案：
+・ChatGDPにおすすめの曲を教えてもらう機能追加
+・ジャンル検索　可能かAPIを調査
+・ログイン機能追加　supebaseか、Laravelのどちらか　JWTで作成
+・口コミ投稿機能作成
+　・デザイン作成 
+　・口コミ投稿機能作成
+　　投稿　ログインしないと使えない
+　　一覧表示　ログインせずに見れる
+  　投稿画面
+  　　星(5段階)で評価
+  　　口コミ投稿　100文字以内
+　
