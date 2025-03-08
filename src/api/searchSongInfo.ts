@@ -1,5 +1,5 @@
 import axios from 'axios';
-import token from '../lib/getToken';
+import token from '../lib/fetchToken';
 
   interface  SearchProps {
     keyword: string;
