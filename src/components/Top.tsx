@@ -15,7 +15,6 @@ function Top() {
   const [keyword, setKeyword] = useState('');
   const [searchedSongs, setSearchedSongs] = useState<SearchSongList>();
   const isSearchedResult = searchedSongs != null;
-  console.log(isSearchedResult);
 
   useEffect(() => {
     featchPopularSongs()
