@@ -17,7 +17,7 @@ steps:
       - '--region=asia-northeast1'
       - '--platform=managed'
       - '--allow-unauthenticated'
-      - '--set-env-vars=PORT=80
+      - '--set-env-vars=PORT=80'
 
 images:
   - 'gcr.io/$PROJECT_ID/music-play-app'
