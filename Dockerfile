@@ -13,10 +13,12 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # パッケージファイルをコピー
 COPY package.json package-lock.json ./
 
-EXPOSE 80
-
 # 作業ディレクトリを設定
 WORKDIR /app
 
+# Cloud Run は PORT 環境変数を自動設定するため明示的に 8080 を指定
+ENV PORT=8080
+EXPOSE 8080
+
 # 開発用サーバの起動
-CMD ["nginx", "-g", "daemon off;","npm", "run", "dev"]
+CMD ["nginx", "-g", "node", "server.js", "daemon off;","npm", "run", "dev"]
