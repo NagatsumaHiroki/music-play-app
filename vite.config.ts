@@ -6,7 +6,7 @@ import env from "vite-plugin-env-compatible"
 export default defineConfig({
   plugins: [react(), env({ prefix: "VITE", mountedPath: "process.env" })],
   server: {
-    port: Number(process.env.PORT) || 5173,
+    port: 8080,
     strictPort: true,
     host: '0.0.0.0',
   }
