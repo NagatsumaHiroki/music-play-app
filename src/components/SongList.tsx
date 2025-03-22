@@ -31,7 +31,7 @@ export const SongList: FC<ListParam> = ({ isLoading, songs}) => {
        >
         <img
           alt="thumbnail"
-          src={song.track ? song.track.album.images[0].url : song.album.images[0].url}
+          src={song.track ? song.track.album.images[0]?.url : song.album.images[0]?.url}
           className="mb-2 rounded"
         />
         <h3 className="text-lg font-semibold">
