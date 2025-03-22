@@ -1,8 +1,9 @@
+import React from 'react';
+import { FC } from 'react';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon }from '@fortawesome/react-fontawesome'
-import { FC } from 'react';
 import { popularSongsList, SearchSongList  }  from '../type'
-import React from 'react';
+import noImage from '../assets/images/no_image.png';
 
 interface ListParam {
   isLoading: boolean,
@@ -30,8 +31,17 @@ export const SongList: FC<ListParam> = ({ isLoading, songs}) => {
           key={song.track ? song.track.id : song.id}
        >
         <img
-          alt="thumbnail"
-          src={song.track ? song.track.album.images[0].url : song.album.images[0].url}
+         alt="thumbnail"
+         src={
+            (() => {
+            if(song?.track?.album?.images[0]?.url){
+                return song.track.album.images[0]?.url;
+            }if (song?.album?.images[0]?.url) {
+              return song?.album?.images[0]?.url;
+            } else {
+              return noImage
+            }
+            })()}
           className="mb-2 rounded"
         />
         <h3 className="text-lg font-semibold">
