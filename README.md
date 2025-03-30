@@ -1,4 +1,4 @@
-# Music Play Project
+# VibeLink Project
 
 ## 概要
 音楽検索サービスになります。
