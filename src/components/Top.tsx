@@ -4,6 +4,7 @@ import { SongList } from '../components/SongList'
 import {getPopularSongs} from '../api/getPopularSongs'
 import { SearchInput } from '../components/SearchInput';
 import { searchSongInfo } from '../api/searchSongInfo'
+import { Helmet } from "react-helmet-async";
 
 import ScrollToTopButton from './Button/ScrollToTopButton';
 
@@ -48,11 +49,17 @@ function Top() {
 
   return (
     <>
+    <Helmet>
+      <title>バイブリンク (VibeLink) | 音楽・アニメ検索サイト</title>
+      <meta name="description" content={"【バイブリンク】音楽の検索サイト。楽曲名でJ-POPや洋楽など検索、視聴出来ます"} />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta charSet='utf-8'/>
+    </Helmet>
       <div className="flex flex-col min-h-screen bg-gray-900 text-white">
         <main className="flex-1 p-8 mb-20">
           <header className="flex justify-between items-center mb-10">
             <h1 className="text-4xl font-bold">
-                <a href="/">Music App</a>
+                <a href="/">VibeLink</a>
             </h1>
           </header>
           <SearchInput onInputChange={handlInputChatnge} onSubmit={searchSongs}/>
