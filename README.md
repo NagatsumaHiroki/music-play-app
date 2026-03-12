@@ -1,4 +1,4 @@
-# VibeLink Project
+# Music Project
 
 ## 概要
 音楽検索サービスになります。
@@ -26,10 +26,10 @@ npm install
 以下のコマンドを実行して、開発サーバーを起動します。
 
 ```sh
-docker compose up -d
+npm run dev
 ```
 
-ブラウザで `http://localhost:3000` にアクセスして、アプリケーションを確認してください。
+ブラウザで `http://localhost:8080` にアクセスして、アプリケーションを確認してください。
 
 ## ビルド
 本番環境向けにビルドするには、以下のコマンドを実行してください。
