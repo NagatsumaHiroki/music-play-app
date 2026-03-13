@@ -8,7 +8,7 @@ export async function GET() {
   } catch (error) {
     console.error('Error fetching popular songs:', error)
     return NextResponse.json(
-      { error: 'Failed to fetch popular songs' },
+      { error: '曲の取得に失敗しました。しばらくしてから再度お試しください。' },
       { status: 500 }
     )
   }

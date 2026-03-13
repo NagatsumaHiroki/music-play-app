@@ -4,17 +4,23 @@ import { useState } from 'react'
 import { SearchInput } from './SearchInput'
 import { SongList } from './SongList'
 import { ScrollToTopButton } from './ScrollToTopButton'
+import { ErrorModal } from './ErrorModal'
 import { SongForDisplay } from '@/lib/types'
 
 interface SearchSectionProps {
   initialSongs: SongForDisplay[]
+  initialError?: string | null
 }
 
-export const SearchSection = ({ initialSongs }: SearchSectionProps) => {
+export const SearchSection = ({
+  initialSongs,
+  initialError = null,
+}: SearchSectionProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [songs, setSongs] = useState<SongForDisplay[]>(initialSongs)
   const [keyword, setKeyword] = useState('')
   const [isSearchResult, setIsSearchResult] = useState(false)
+  const [error, setError] = useState<string | null>(initialError)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value)
@@ -24,12 +30,23 @@ export const SearchSection = ({ initialSongs }: SearchSectionProps) => {
     setIsLoading(true)
     try {
       const response = await fetch('/api/spotify/popular')
-      if (!response.ok) throw new Error('Failed to fetch popular songs')
+      if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as { error?: string } | null
+        throw new Error(
+          data?.error ??
+            '曲の取得に失敗しました。しばらくしてから再度お試しください。'
+        )
+      }
       const data = await response.json()
       setSongs(data)
       setIsSearchResult(false)
-    } catch (error) {
-      console.error('Error fetching popular songs:', error)
+    } catch (err) {
+      console.error('Error fetching popular songs:', err)
+      setError(
+        err instanceof Error
+          ? err.message
+          : '曲の取得に失敗しました。しばらくしてから再度お試しください。'
+      )
     } finally {
       setIsLoading(false)
     }
@@ -46,15 +63,29 @@ export const SearchSection = ({ initialSongs }: SearchSectionProps) => {
       const response = await fetch(
         `/api/spotify/search?q=${encodeURIComponent(keyword)}`
       )
-      if (!response.ok) throw new Error('Failed to search songs')
+      if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as { error?: string } | null
+        throw new Error(
+          data?.error ?? '検索に失敗しました。しばらくしてから再度お試しください。'
+        )
+      }
       const data = await response.json()
       setSongs(data)
       setIsSearchResult(true)
-    } catch (error) {
-      console.error('Error searching songs:', error)
+    } catch (err) {
+      console.error('Error searching songs:', err)
+      setError(
+        err instanceof Error
+          ? err.message
+          : '検索に失敗しました。しばらくしてから再度お試しください。'
+      )
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const handleCloseError = () => {
+    setError(null)
   }
 
   return (
@@ -67,6 +98,13 @@ export const SearchSection = ({ initialSongs }: SearchSectionProps) => {
         <ScrollToTopButton />
         <SongList isLoading={isLoading} songs={songs} />
       </section>
+
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={handleCloseError}
+        />
+      )}
     </>
   )
 }

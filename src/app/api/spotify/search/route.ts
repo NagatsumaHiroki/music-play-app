@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Error searching songs:', error)
     return NextResponse.json(
-      { error: 'Failed to search songs' },
+      { error: '検索に失敗しました。しばらくしてから再度お試しください。' },
       { status: 500 }
     )
   }

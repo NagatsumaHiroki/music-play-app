@@ -5,10 +5,12 @@ import { SongForDisplay } from '@/lib/types'
 
 export default async function Home() {
   let initialSongs: SongForDisplay[] = []
+  let initialError: string | null = null
   try {
     initialSongs = await getPopularSongs()
   } catch (error) {
     console.error('Failed to fetch initial songs:', error)
+    initialError = '曲の取得に失敗しました。しばらくしてから再度お試しください。'
   }
 
   return (
@@ -19,7 +21,7 @@ export default async function Home() {
             <Link href="/">Music App</Link>
           </h1>
         </header>
-        <SearchSection initialSongs={initialSongs} />
+        <SearchSection initialSongs={initialSongs} initialError={initialError} />
       </main>
     </div>
   )
