@@ -13,8 +13,6 @@ const POPULAR_PLAYLIST_ID = '5SLPaOxQyJ8Ne9zpmTOvSe'
 let cachedToken: string | null = null
 let tokenExpiry: number = 0
 
-const LEGACY_SPOTIFY_PREFIX_LENGTH = 10
-
 function normalizeCredential(value: string | undefined): string | undefined {
   if (!value) {
     return undefined
@@ -35,30 +33,9 @@ function normalizeCredential(value: string | undefined): string | undefined {
   return trimmed
 }
 
-function decodeLegacyCredential(value: string | undefined): string | undefined {
-  const normalized = normalizeCredential(value)
-  if (!normalized) {
-    return undefined
-  }
-
-  try {
-    const decoded = Buffer.from(normalized, 'base64').toString('utf8')
-    if (decoded.length > LEGACY_SPOTIFY_PREFIX_LENGTH) {
-      return decoded.slice(LEGACY_SPOTIFY_PREFIX_LENGTH)
-    }
-    return decoded
-  } catch {
-    return normalized
-  }
-}
-
 function getSpotifyCredentials() {
-  const clientId =
-    normalizeCredential(process.env.SPOTIFY_CLIENT_ID) ??
-    decodeLegacyCredential(process.env.VITE__APP_SPOTIFY_CLIENT_ID)
-  const clientSecret =
-    normalizeCredential(process.env.SPOTIFY_CLIENT_SECRET) ??
-    decodeLegacyCredential(process.env.VITE__APP_SPOTIFY_CLIENT_SECRET)
+  const clientId = normalizeCredential(process.env.SPOTIFY_CLIENT_ID)
+  const clientSecret = normalizeCredential(process.env.SPOTIFY_CLIENT_SECRET)
 
   return { clientId, clientSecret }
 }
@@ -113,7 +90,7 @@ async function getAccessToken(): Promise<string> {
 
   if (!clientId || !clientSecret) {
     throw new Error(
-      'Spotify credentials not configured: set SPOTIFY_CLIENT_ID/SPOTIFY_CLIENT_SECRET or legacy VITE__APP_SPOTIFY_* values'
+      'Spotify credentials not configured: set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET'
     )
   }
 
